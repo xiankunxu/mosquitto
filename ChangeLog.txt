@@ -22,6 +22,7 @@ Client library:
   cmake version to 3.1, which is still ancient.
 - Fix use of `MOSQ_OPT_TLS_ENGINE` being unable to be used due to the openssl
   ctx not being initialised until starting to connect. Closes #2537.
+- Fix incorrect use of SSL_connect. Closes #2594.
 - Don't set SIGPIPE to ignore, use MSG_NOSIGNAL instead. Closes #2564.
 - Add documentation of struct mosquitto_message to header. Closes #2561.
 
