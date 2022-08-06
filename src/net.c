@@ -570,7 +570,7 @@ int net__tls_load_verify(struct mosquitto__listener *listener)
 #ifdef WITH_TLS
 	int rc;
 
-#if OPENSSL_VERSION_NUMBER < 0x30000000L
+#  if OPENSSL_VERSION_NUMBER < 0x30000000L
 	if(listener->cafile || listener->capath){
 		rc = SSL_CTX_load_verify_locations(listener->ssl_ctx, listener->cafile, listener->capath);
 		if(rc == 0){
@@ -583,7 +583,7 @@ int net__tls_load_verify(struct mosquitto__listener *listener)
 			}
 		}
 	}
-#else
+#  else
 	if(listener->cafile){
 		rc = SSL_CTX_load_verify_file(listener->ssl_ctx, listener->cafile);
 		if(rc == 0){
@@ -600,11 +600,13 @@ int net__tls_load_verify(struct mosquitto__listener *listener)
 			return MOSQ_ERR_TLS;
 		}
 	}
-#endif
+#  endif
 
+#  if !defined(OPENSSL_NO_ENGINE)
 	if(net__load_engine(listener)){
 		return MOSQ_ERR_TLS;
 	}
+#  endif
 #endif
 	return net__load_certificates(listener);
 }

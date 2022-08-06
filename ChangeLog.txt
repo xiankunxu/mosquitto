@@ -55,6 +55,7 @@ Broker:
 - Fix mosquitto_plugin.h not including mosquitto_broker.h. Closes #2350.
 - Fix unlimited message quota not being properly checked for incoming
   messages. Closes #2593.
+- Fixed build for openssl compiled with OPENSSL_NO_ENGINE. Closes #2589.
 
 Client library:
 - Initialise sockpairR/W to invalid in `mosquitto_reinitialise()` to avoid
