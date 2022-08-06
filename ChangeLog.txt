@@ -53,6 +53,8 @@ Broker:
 - Fix broker sending duplicate CONNACK on failed MQTT v5 reauthentication.
   Closes #2339.
 - Fix mosquitto_plugin.h not including mosquitto_broker.h. Closes #2350.
+- Fix unlimited message quota not being properly checked for incoming
+  messages. Closes #2593.
 
 Client library:
 - Initialise sockpairR/W to invalid in `mosquitto_reinitialise()` to avoid

@@ -1188,7 +1188,7 @@ int db__message_write_queued_in(struct mosquitto *context)
 	}
 
 	DL_FOREACH_SAFE(context->msgs_in.queued, tail, tmp){
-		if(context->msgs_out.inflight_maximum != 0 && context->msgs_in.inflight_quota == 0){
+		if(context->msgs_in.inflight_maximum != 0 && context->msgs_in.inflight_quota == 0){
 			break;
 		}
 
