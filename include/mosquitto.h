@@ -83,7 +83,8 @@ extern "C" {
 #define MOSQ_LOG_INTERNAL		0x80000000U
 #define MOSQ_LOG_ALL			0xFFFFFFFFU
 
-/* Error values */
+/* Enum: mosq_err_t
+ * Integer values returned from many libmosquitto functions. */
 enum mosq_err_t {
 	MOSQ_ERR_AUTH_CONTINUE = -4,
 	MOSQ_ERR_NO_SUBSCRIBERS = -3,
@@ -123,7 +124,12 @@ enum mosq_err_t {
 	MOSQ_ERR_ALREADY_EXISTS = 31,
 };
 
-/* Option values */
+/* Enum: mosq_opt_t
+ *
+ * Client options.
+ *
+ * See <mosquitto_int_option>, <mosquitto_string_option>, and <mosquitto_void_option>.
+ */
 enum mosq_opt_t {
 	MOSQ_OPT_PROTOCOL_VERSION = 1,
 	MOSQ_OPT_SSL_CTX = 2,
@@ -148,6 +154,24 @@ enum mosq_opt_t {
 #define MQTT_PROTOCOL_V311 4
 #define MQTT_PROTOCOL_V5 5
 
+/* Struct: mosquitto_message
+ *
+ * Contains details of a PUBLISH message.
+ *
+ * int mid - the message/packet ID of the PUBLISH message, assuming this is a
+ *           QoS 1 or 2 message. Will be set to 0 for QoS 0 messages.
+ *
+ * char *topic - the topic the message was delivered on.
+ *
+ * void *payload - the message payload. This will be payloadlen bytes long, and
+ *                 may be NULL if a zero length payload was sent.
+ *
+ * int payloadlen - the length of the payload, in bytes.
+ *
+ * int qos - the quality of service of the message, 0, 1, or 2.
+ *
+ * bool retain - set to true for stale retained messages.
+ */
 struct mosquitto_message{
 	int mid;
 	char *topic;
