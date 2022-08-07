@@ -109,10 +109,6 @@ struct mosquitto *mosquitto_new(const char *id, bool clean_start, void *userdata
 		return NULL;
 	}
 
-#ifndef WIN32
-	signal(SIGPIPE, SIG_IGN);
-#endif
-
 	mosq = (struct mosquitto *)mosquitto__calloc(1, sizeof(struct mosquitto));
 	if(mosq){
 		mosq->sock = INVALID_SOCKET;

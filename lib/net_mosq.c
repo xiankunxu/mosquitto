@@ -1041,11 +1041,7 @@ ssize_t net__write(struct mosquitto *mosq, const void *buf, size_t count)
 		/* Call normal write/send */
 #endif
 
-#ifndef WIN32
-	return write(mosq->sock, buf, count);
-#else
-	return send(mosq->sock, buf, count, 0);
-#endif
+	return send(mosq->sock, buf, count, MSG_NOSIGNAL);
 
 #ifdef WITH_TLS
 	}
