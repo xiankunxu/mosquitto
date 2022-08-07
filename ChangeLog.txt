@@ -15,6 +15,7 @@ Broker:
   persistence. Closes #2546.
 - Fix bridges not sending failure notification messages to the local broker if
   the remote bridge connection fails. Closes #2467. Closes #1488.
+- Fix some PUBLISH messages not being counted in $SYS stats. Closes #2448.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum
