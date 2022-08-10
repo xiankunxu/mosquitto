@@ -28,6 +28,8 @@ Client library:
 - Don't set SIGPIPE to ignore, use MSG_NOSIGNAL instead. Closes #2564.
 - Add documentation of struct mosquitto_message to header. Closes #2561.
 - Fix documentation omission around mosquitto_reinitialise. Closes #2489.
+- Fix use of MOSQ_OPT_SSL_CTX when used in conjunction with
+  MOSQ_OPT_SSL_CTX_DEFAULTS. Closes #2463.
 
 Clients:
 - Fix mosquitto_pub incorrectly reusing topic aliases when reconnecting.
