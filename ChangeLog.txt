@@ -16,6 +16,8 @@ Broker:
 - Fix bridges not sending failure notification messages to the local broker if
   the remote bridge connection fails. Closes #2467. Closes #1488.
 - Fix some PUBLISH messages not being counted in $SYS stats. Closes #2448.
+- Fix incorrect return code being sent in DISCONNECT when a client session is
+  taken over. Closes #2607.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum

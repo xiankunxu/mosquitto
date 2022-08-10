@@ -205,6 +205,10 @@ int connect__on_authorised(struct mosquitto *context, void *auth_data_out, uint1
 		found_context->clean_start = true;
 		found_context->session_expiry_interval = 0;
 		mosquitto__set_state(found_context, mosq_cs_duplicate);
+
+		if(found_context->protocol == mosq_p_mqtt5){
+			send__disconnect(found_context, MQTT_RC_SESSION_TAKEN_OVER, NULL);
+		}
 		do_disconnect(found_context, MOSQ_ERR_SUCCESS);
 	}
 
