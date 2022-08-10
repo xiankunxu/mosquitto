@@ -27,6 +27,7 @@ Client library:
 - Fix incorrect use of SSL_connect. Closes #2594.
 - Don't set SIGPIPE to ignore, use MSG_NOSIGNAL instead. Closes #2564.
 - Add documentation of struct mosquitto_message to header. Closes #2561.
+- Fix documentation omission around mosquitto_reinitialise. Closes #2489.
 
 Clients:
 - Fix mosquitto_pub incorrectly reusing topic aliases when reconnecting.
