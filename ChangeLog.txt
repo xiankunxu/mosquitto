@@ -33,6 +33,11 @@ Clients:
 - Fix mosquitto_pub incorrectly reusing topic aliases when reconnecting.
   Closes #2494.
 
+Apps:
+- Fix `-o` not working in `mosquitto_ctrl`, and typo in related documentation.
+  Closes #2471.
+
+
 2.0.14 - 2021-11-17
 ===================
 
