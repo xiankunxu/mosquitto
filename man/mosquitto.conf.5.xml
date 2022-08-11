@@ -1263,6 +1263,7 @@ log_timestamp_format %Y-%m-%dT%H:%M:%S
 							disconnected as not authorised when this option is
 							set to true. Do not use in conjunction with
 							<option>clientid_prefixes</option>.</para>
+						<para>This does not apply globally, but on a per-listener basis.</para>
 						<para>See also
 							<option>use_identity_as_username</option>.</para>
 						<para>Not reloaded on reload signal.</para>
