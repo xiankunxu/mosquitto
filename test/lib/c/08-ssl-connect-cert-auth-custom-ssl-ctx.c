@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,6 +7,11 @@
 #include <openssl/ssl.h>
 
 static int run = -1;
+
+void handle_sigint(int signal)
+{
+	run = 0;
+}
 
 void on_connect(struct mosquitto *mosq, void *obj, int rc)
 {
@@ -53,9 +59,11 @@ int main(int argc, char *argv[])
 
 	rc = mosquitto_connect(mosq, "localhost", port, 60);
 
+	signal(SIGINT, handle_sigint);
 	while(run == -1){
 		mosquitto_loop(mosq, -1, 1);
 	}
+	SSL_CTX_free(ssl_ctx);
 	mosquitto_destroy(mosq);
 
 	mosquitto_lib_cleanup();
