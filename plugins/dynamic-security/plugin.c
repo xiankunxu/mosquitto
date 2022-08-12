@@ -361,15 +361,21 @@ static int dynsec__config_load(void)
 	fptr = fopen(config_file, "rb");
 	if(fptr == NULL){
 		mosquitto_log_printf(MOSQ_LOG_ERR, "Error loading Dynamic security plugin config: File is not readable - check permissions.\n");
-		return 1;
+		return MOSQ_ERR_ERRNO;
 	}
+#ifndef WIN32
+	if(errno == ENOTDIR || errno == EISDIR){
+		mosquitto_log_printf(MOSQ_LOG_ERR, "Error loading Dynamic security plugin config: Config is not a file.\n");
+		return MOSQ_ERR_ERRNO;
+	}
+#endif
 
 	fseek(fptr, 0, SEEK_END);
 	flen_l = ftell(fptr);
 	if(flen_l < 0){
 		mosquitto_log_printf(MOSQ_LOG_ERR, "Error loading Dynamic security plugin config: %s\n", strerror(errno));
 		fclose(fptr);
-		return 1;
+		return MOSQ_ERR_ERRNO;
 	}else if(flen_l == 0){
 		fclose(fptr);
 		return 0;
@@ -380,13 +386,13 @@ static int dynsec__config_load(void)
 	if(json_str == NULL){
 		mosquitto_log_printf(MOSQ_LOG_ERR, "Error: Out of memory.");
 		fclose(fptr);
-		return 1;
+		return MOSQ_ERR_NOMEM;
 	}
 	if(fread(json_str, 1, flen, fptr) != flen){
 		mosquitto_log_printf(MOSQ_LOG_WARNING, "Error loading Dynamic security plugin config: Unable to read file contents.\n");
 		mosquitto_free(json_str);
 		fclose(fptr);
-		return 1;
+		return MOSQ_ERR_ERRNO;
 	}
 	fclose(fptr);
 
@@ -394,7 +400,7 @@ static int dynsec__config_load(void)
 	mosquitto_free(json_str);
 	if(tree == NULL){
 		mosquitto_log_printf(MOSQ_LOG_ERR, "Error loading Dynamic security plugin config: File is not valid JSON.\n");
-		return 1;
+		return MOSQ_ERR_INVAL;
 	}
 
 	if(dynsec__general_config_load(tree)
@@ -404,7 +410,7 @@ static int dynsec__config_load(void)
 			){
 
 		cJSON_Delete(tree);
-		return 1;
+		return MOSQ_ERR_NOMEM;
 	}
 
 	cJSON_Delete(tree);

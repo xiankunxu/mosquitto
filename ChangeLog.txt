@@ -20,6 +20,8 @@ Broker:
   taken over. Closes #2607.
 - Fix confusing "out of memory" error when a client is kicked in the dynamic
   security plugin. Closes #2525.
+- Fix confusing error message when dynamic security config file was a
+  directory. Closes #2520.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum
