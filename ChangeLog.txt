@@ -22,6 +22,8 @@ Broker:
   security plugin. Closes #2525.
 - Fix confusing error message when dynamic security config file was a
   directory. Closes #2520.
+- Fix bridge queued messages not being persisted when local_cleansession is
+  set to false and cleansession is set to true. Closes #2604.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum

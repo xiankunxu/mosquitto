@@ -167,7 +167,11 @@ static int persist__client_save(FILE *db_fptr)
 	memset(&chunk, 0, sizeof(struct P_client));
 
 	HASH_ITER(hh_id, db.contexts_by_id, context, ctxt_tmp){
-		if(context && context->clean_start == false){
+		if(context && (context->clean_start == false
+#ifdef WITH_BRIDGE
+				|| (context->bridge && context->bridge->clean_start_local == false)
+#endif
+				)){
 			chunk.F.session_expiry_time = context->session_expiry_time;
 			if(context->session_expiry_interval != 0 && context->session_expiry_interval != UINT32_MAX && context->session_expiry_time == 0){
 				chunk.F.session_expiry_time = context->session_expiry_interval + db.now_real_s;
