@@ -358,6 +358,7 @@ static int dynsec__config_load(void)
 	cJSON *tree;
 
 	/* Load from file */
+	errno = 0;
 	fptr = fopen(config_file, "rb");
 	if(fptr == NULL){
 		mosquitto_log_printf(MOSQ_LOG_ERR, "Error loading Dynamic security plugin config: File is not readable - check permissions.\n");
