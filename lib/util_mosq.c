@@ -302,3 +302,23 @@ enum mosquitto_client_state mosquitto__get_state(struct mosquitto *mosq)
 
 	return state;
 }
+
+#ifndef WITH_BROKER
+void mosquitto__set_request_disconnect(struct mosquitto *mosq, bool request_disconnect)
+{
+	pthread_mutex_lock(&mosq->state_mutex);
+	mosq->request_disconnect = request_disconnect;
+	pthread_mutex_unlock(&mosq->state_mutex);
+}
+
+bool mosquitto__get_request_disconnect(struct mosquitto *mosq)
+{
+	bool request_disconnect;
+
+	pthread_mutex_lock(&mosq->state_mutex);
+	request_disconnect = mosq->request_disconnect;
+	pthread_mutex_unlock(&mosq->state_mutex);
+
+	return request_disconnect;
+}
+#endif

@@ -242,7 +242,6 @@ int mosquitto_loop_forever(struct mosquitto *mosq, int timeout, int max_packets)
 	int run = 1;
 	int rc = MOSQ_ERR_SUCCESS;
 	unsigned long reconnect_delay;
-	enum mosquitto_client_state state;
 
 	if(!mosq) return MOSQ_ERR_INVAL;
 
@@ -281,8 +280,7 @@ int mosquitto_loop_forever(struct mosquitto *mosq, int timeout, int max_packets)
 			pthread_testcancel();
 #endif
 			rc = MOSQ_ERR_SUCCESS;
-			state = mosquitto__get_state(mosq);
-			if(state == mosq_cs_disconnecting || state == mosq_cs_disconnected){
+			if(mosquitto__get_request_disconnect(mosq)){
 				run = 0;
 			}else{
 				if(mosq->reconnect_delay_max > mosq->reconnect_delay){
@@ -304,8 +302,7 @@ int mosquitto_loop_forever(struct mosquitto *mosq, int timeout, int max_packets)
 				rc = interruptible_sleep(mosq, (time_t)reconnect_delay);
 				if(rc) return rc;
 
-				state = mosquitto__get_state(mosq);
-				if(state == mosq_cs_disconnecting || state == mosq_cs_disconnected){
+				if(mosquitto__get_request_disconnect(mosq)){
 					run = 0;
 				}else{
 					rc = mosquitto_reconnect(mosq);

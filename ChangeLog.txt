@@ -36,6 +36,7 @@ Client library:
 - Fix documentation omission around mosquitto_reinitialise. Closes #2489.
 - Fix use of MOSQ_OPT_SSL_CTX when used in conjunction with
   MOSQ_OPT_SSL_CTX_DEFAULTS. Closes #2463.
+- Fix failure to close thread in some situations. Closes #2545.
 
 Clients:
 - Fix mosquitto_pub incorrectly reusing topic aliases when reconnecting.
