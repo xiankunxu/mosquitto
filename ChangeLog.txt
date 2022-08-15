@@ -24,6 +24,9 @@ Broker:
   directory. Closes #2520.
 - Fix bridge queued messages not being persisted when local_cleansession is
   set to false and cleansession is set to true. Closes #2604.
+- Dynamic security: Fix modifyClient and modifyGroup commands to not modify
+  the client/group if a new group/client being added is not valid.
+  Closes #2598.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum
