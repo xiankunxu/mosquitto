@@ -31,6 +31,8 @@ Broker:
   only a single plugin can interact with a unique $CONTROL topic. Using
   multiple instances of the plugin would produce duplicate entries in the
   config file. Closes #2601. Closes #2470.
+- Fix case where expired messages were causing queued messages not to be
+  delivered. Closes #2609.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum

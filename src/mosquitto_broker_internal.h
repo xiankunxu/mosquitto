@@ -670,6 +670,7 @@ int db__message_write_queued_out(struct mosquitto *context);
 int db__message_write_queued_in(struct mosquitto *context);
 void db__msg_add_to_inflight_stats(struct mosquitto_msg_data *msg_data, struct mosquitto_client_msg *msg);
 void db__msg_add_to_queued_stats(struct mosquitto_msg_data *msg_data, struct mosquitto_client_msg *msg);
+void db__expire_all_messages(struct mosquitto *context);
 
 /* ============================================================
  * Subscription functions
