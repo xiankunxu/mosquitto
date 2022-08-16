@@ -41,6 +41,7 @@ Broker:
   config file. Closes #2601. Closes #2470.
 - Fix case where expired messages were causing queued messages not to be
   delivered. Closes #2609.
+- Fix websockets not passing on the X-Forwarded-For header.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum
