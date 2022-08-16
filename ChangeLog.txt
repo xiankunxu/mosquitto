@@ -27,6 +27,10 @@ Broker:
 - Dynamic security: Fix modifyClient and modifyGroup commands to not modify
   the client/group if a new group/client being added is not valid.
   Closes #2598.
+- Dynamic security: Fix the plugin being able to be loaded twice. Currently
+  only a single plugin can interact with a unique $CONTROL topic. Using
+  multiple instances of the plugin would produce duplicate entries in the
+  config file. Closes #2601. Closes #2470.
 
 Client library:
 - Fix threads library detection on Windows under cmake. Bumps the minimum
