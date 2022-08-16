@@ -466,6 +466,11 @@ int dynsec_groups__process_delete(cJSON *j_responses, struct mosquitto *context,
 
 	group = dynsec_groups__find(groupname);
 	if(group){
+		if(group == dynsec_anonymous_group){
+			dynsec__command_reply(j_responses, context, "deleteGroup", "Deleting the anonymous group is forbidden", correlation_data);
+			return MOSQ_ERR_INVAL;
+		}
+
 		/* Enforce any changes */
 		group__kick_all(group);
 

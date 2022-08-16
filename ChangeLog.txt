@@ -1,5 +1,13 @@
-2.0.15 - 2022-xx-xx
+2.0.15 - 2022-08-16
 ===================
+
+Security:
+- Deleting the group configured as the anonymous group in the Dynamic Security
+  plugin, would leave a dangling pointer that could lead to a single crash.
+  This is considered a minor issue - only administrative users should have
+  access to dynsec, the impact on availability is one-off, and there is no
+  associated loss of data. It is now forbidden to delete the group configured
+  as the anonymous group.
 
 Broker:
 - Fix memory leak when a plugin modifies the topic of a message in
