@@ -99,6 +99,11 @@ libmosquitto.a : ${MOSQ_OBJS}
 	${CROSS_COMPILE}$(AR) cr $@ $^
 
 mosquitto.o : mosquitto.c ../include/mosquitto.h mosquitto_internal.h
+	$(info    CC is $(CC))
+	$(info    LIB_LDFLAGS is $(LIB_LDFLAGS))
+	$(info    LIB_LIBADD is $(LIB_LIBADD))
+	$(info    LIB_CPPFLAGS is $(LIB_CPPFLAGS))
+	$(info    LIB_CFLAGS is $(LIB_CFLAGS))
 	${CROSS_COMPILE}$(CC) $(LIB_CPPFLAGS) $(LIB_CFLAGS) -c $< -o $@
 
 actions.o : actions.c ../include/mosquitto.h mosquitto_internal.h

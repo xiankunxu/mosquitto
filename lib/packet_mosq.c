@@ -31,6 +31,7 @@ Contributors:
 #  include "read_handle.h"
 #endif
 
+#include "logging_mosq.h"
 #include "memory_mosq.h"
 #include "mqtt_protocol.h"
 #include "net_mosq.h"
@@ -245,6 +246,7 @@ int packet__write(struct mosquitto *mosq)
 		packet = mosq->current_out_packet;
 
 		while(packet->to_process > 0){
+
 			write_length = net__write(mosq, &(packet->payload[packet->pos]), packet->to_process);
 			if(write_length > 0){
 				G_BYTES_SENT_INC(write_length);
@@ -539,6 +541,8 @@ int packet__read(struct mosquitto *mosq)
 	}
 
 	/* All data for this packet is read. */
+
+
 	mosq->in_packet.pos = 0;
 #ifdef WITH_BROKER
 	G_MSGS_RECEIVED_INC(1);

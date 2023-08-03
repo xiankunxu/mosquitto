@@ -186,7 +186,9 @@ int mux_epoll__handle(void)
 
 	memset(&ev, 0, sizeof(struct epoll_event));
 	sigprocmask(SIG_SETMASK, &my_sigblock, &origsig);
-	event_count = epoll_wait(db.epollfd, ep_events, MAX_EVENTS, 100);
+	log__printf(NULL, MOSQ_LOG_INFO, "Before epoll_wait");
+	event_count = epoll_wait(db.epollfd, ep_events, MAX_EVENTS, 10000);
+	log__printf(NULL, MOSQ_LOG_INFO, "After epoll_wait");
 	sigprocmask(SIG_SETMASK, &origsig, NULL);
 
 	db.now_s = mosquitto_time();

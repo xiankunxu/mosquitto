@@ -24,6 +24,7 @@ Contributors:
 #include <syslog.h>
 #endif
 #include <time.h>
+#include <stdint.h> // `UINT64_MAX`
 
 #if defined(__APPLE__)
 #  include <sys/time.h>
@@ -60,6 +61,27 @@ static char log_fptr_buffer[BUFSIZ];
  */
 static unsigned int log_destinations = MQTT3_LOG_STDERR;
 static unsigned int log_priorities = MOSQ_LOG_ERR | MOSQ_LOG_WARNING | MOSQ_LOG_NOTICE | MOSQ_LOG_INFO;
+
+/// Convert seconds to nanoseconds
+// comment out #log_timestamp_format in mosquitto.conf to get the nano second timestamp
+#define SEC_TO_NS(sec) ((sec)*1000000000)
+uint64_t get_nano()
+{
+    uint64_t nanoseconds;
+    struct timespec ts;
+    int return_code = timespec_get(&ts, TIME_UTC);
+    if (return_code == 0)
+    {
+        nanoseconds = UINT64_MAX; // use this to indicate error
+    }
+    else
+    {
+        // `ts` now contains your timestamp in seconds and nanoseconds! To 
+        // convert the whole struct to nanoseconds, do this:
+        nanoseconds = SEC_TO_NS((uint64_t)ts.tv_sec) + (uint64_t)ts.tv_nsec;
+    }
+	return nanoseconds;
+}
 
 #ifdef WITH_DLT
 static DltContext dltContext;
@@ -291,7 +313,8 @@ static int log__vprintf(unsigned int priority, const char *fmt, va_list va)
 					log_line_pos = (size_t)snprintf(log_line, sizeof(log_line), "Time error");
 				}
 			}else{
-				log_line_pos = (size_t)snprintf(log_line, sizeof(log_line), "%d", (int)db.now_real_s);
+				uint64_t time_nano = get_nano();
+				log_line_pos = (size_t)snprintf(log_line, sizeof(log_line), "%lu", time_nano);
 			}
 			if(log_line_pos < sizeof(log_line)-3){
 				log_line[log_line_pos] = ':';
