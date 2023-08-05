@@ -1,0 +1,2 @@
+To debug with gdb:
+gdb --args ./src/mosquitto -c ./conf_files/conf.d/test.conf
